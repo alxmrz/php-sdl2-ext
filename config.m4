@@ -88,7 +88,25 @@ if test "$PHP_PHP_SDL2" != "no"; then
   dnl PHP_SUBST(PHP_SDL2_SHARED_LIBADD)
 
   dnl In case of no dependencies
+
+
   AC_DEFINE(HAVE_PHP_SDL2, 1, [ Have php_sdl2 support ])
+
+  LIBNAME=SDL2
+  LIBSYMBOL=SDL_Init
+  dnl LIBSDL2_LIBS=`pkg-config --libs sdl2`
+  dnl LIBSDL2_INC=`pkg-config --cflags sdl2`
+  EXTRA_CFLAGS=`pkg-config --cflags --libs sdl2`
+
+  PHP_CHECK_LIBRARY($LIBNAME,$LIBSYMBOL,
+  [
+    dnl PHP_ADD_LIBRARY($LIBNAME,1,ALL_LIBS)
+    PHP_SUBST(EXTRA_CFLAGS)
+    AC_DEFINE(HAVE_PHP_SDL_INIT, 1, [Whether you have PHP_SDL2])
+    AC_MSG_RESULT(found)
+  ],[
+    AC_MSG_ERROR([wrong lib$LIBNAME version or library not found])
+  ])
 
   PHP_NEW_EXTENSION(php_sdl2, php_sdl2.c, $ext_shared)
 fi

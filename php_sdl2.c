@@ -9,6 +9,9 @@
 #include "php_php_sdl2.h"
 #include "php_sdl2_arginfo.h"
 
+#include "SDL2/SDL.h"
+
+
 /* For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
 #define ZEND_PARSE_PARAMETERS_NONE() \
@@ -21,6 +24,49 @@ PHP_FUNCTION(test1)
 {
 	ZEND_PARSE_PARAMETERS_NONE();
 
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        php_printf("Cant intitialize SDL: %s\n", SDL_GetError());
+        return;
+    }
+
+    SDL_Window *window = SDL_CreateWindow(
+            "Tetris with SDL2!",
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            800,
+            600,
+            SDL_WINDOW_SHOWN);
+
+    if (window == NULL) {
+        php_printf("Can't create window: %s\n", SDL_GetError());
+        return;
+    }
+
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == NULL) {
+        php_printf("Can't create renderer: %s\n", SDL_GetError());
+
+        return;
+    }
+
+    SDL_UpdateWindowSurface(window);
+    SDL_SetRenderDrawColor(renderer, 160, 160, 160, 0);
+    SDL_Rect mainRect = {0, 0, 800, 600};
+
+    if (SDL_RenderFillRect(renderer, &mainRect) < 0) {
+        php_printf("Can't resresh canvas: (%s)", SDL_GetError());
+        SDL_Quit();
+        return ;
+    }
+
+    SDL_RenderPresent(renderer);
+    SDL_Delay(5000);
+
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
+    SDL_DestroyWindow(window);
+
+	php_printf("The extension %s is loaded and working!\r\n", "php_sdl2");
 	php_printf("The extension %s is loaded and working!\r\n", "php_sdl2");
 }
 /* }}} */
