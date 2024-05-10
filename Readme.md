@@ -9,8 +9,13 @@ To compile need to run:
 - `make test` for tests
 - `php -dextension=php_sdl2 -m | grep php_sdl2` to check that ext loaded successfully
 
+  -jN - where N is a count of available processes (maxValue=cores x 2) for quick compilation
+  
+For CLion and cmake:
 
--jN - where N is a count of available processes (maxValue=cores x 2) for quick compilation
+`cmake -S . -B cmake-build-debug -DPHP_SOURCE="~/myphp/include/php"`
+
+where PHP_SOURCE is path to php headers (`/path_to_php/bin/php-config --include-dir`)
 
 
 Additional info about an extension building:
