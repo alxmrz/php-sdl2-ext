@@ -1,0 +1,7 @@
+ARG_ENABLE('php_sdl2', 'php_sdl2 support', 'no');
+
+if (PHP_PHP_SDL2 != 'no') {
+	AC_DEFINE('HAVE_PHP_SDL2', 1, 'php_sdl2 support enabled');
+
+	EXTENSION('php_sdl2', 'php_sdl2.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
