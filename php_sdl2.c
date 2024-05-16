@@ -20,6 +20,8 @@
 #endif
 
 zend_class_entry *sdl_rect_ce;
+zend_class_entry *sdl_window_ce;
+zend_class_entry *sdl_renderer_ce;
 
 static SDL_Window *_ext_window = NULL;
 static SDL_Renderer *_ext_renderer = NULL;
@@ -81,15 +83,16 @@ PHP_FUNCTION(SDL_CreateWindow)
             flags
     );
     if (window == NULL) {
-        RETURN_FALSE;
+        RETURN_NULL();
     }
 
     _ext_window = window;
 
-    RETURN_TRUE;
-   /* zend_object *result = NULL;
+    zval result;
 
-    RETURN_OBJ(result);*/
+    object_init_ex(&result, sdl_window_ce);
+
+    RETURN_OBJ(Z_OBJ(result));
 }
 /* }}} */
 
@@ -110,15 +113,16 @@ PHP_FUNCTION(SDL_CreateRenderer)
             (int)flags
     );
     if (renderer == NULL) {
-        RETURN_FALSE;
+        RETURN_NULL();
     }
 
     _ext_renderer = renderer;
 
-    RETURN_TRUE;
-    /*zend_object *result = NULL;
+    zval result;
 
-    RETURN_OBJ(result);*/
+    object_init_ex(&result, sdl_renderer_ce);
+
+    RETURN_OBJ(Z_OBJ(result));
 }
 /* }}} */
 
@@ -299,6 +303,8 @@ PHP_MINIT_FUNCTION(php_sdl2)
     REGISTER_LONG_CONSTANT("SDL_WINDOWPOS_UNDEFINED", SDL_WINDOWPOS_UNDEFINED, CONST_PERSISTENT);
 
     sdl_rect_ce = register_class_SDL_Rect();
+    sdl_renderer_ce = register_class_SDL_Renderer();
+    sdl_window_ce = register_class_SDL_Window();
 
     return SUCCESS;
 }

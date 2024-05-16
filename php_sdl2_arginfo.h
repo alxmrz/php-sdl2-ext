@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 37b644bea2731c1456a0a9eee7b428f5fa0b125a */
+ * Stub hash: 10aeb260786a12d67b80818de5111d89fa2b91d0 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_GetError, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -8,7 +8,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_Init, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_CreateWindow, 0, 6, _IS_BOOL, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_SDL_CreateWindow, 0, 6, SDL_Window, 1)
 	ZEND_ARG_TYPE_INFO(0, title, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, x, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, y, IS_LONG, 0)
@@ -17,7 +17,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_CreateWindow, 0, 6, _IS_BOOL
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_CreateRenderer, 0, 2, _IS_BOOL, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_SDL_CreateRenderer, 0, 2, SDL_Renderer, 0)
 	ZEND_ARG_TYPE_INFO(0, index, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -94,6 +94,16 @@ static const zend_function_entry class_SDL_Rect_methods[] = {
 	ZEND_FE_END
 };
 
+
+static const zend_function_entry class_SDL_Window_methods[] = {
+	ZEND_FE_END
+};
+
+
+static const zend_function_entry class_SDL_Renderer_methods[] = {
+	ZEND_FE_END
+};
+
 static zend_class_entry *register_class_SDL_Rect(void)
 {
 	zend_class_entry ce, *class_entry;
@@ -124,6 +134,26 @@ static zend_class_entry *register_class_SDL_Rect(void)
 	zend_string *property_height_name = zend_string_init("height", sizeof("height") - 1, 1);
 	zend_declare_typed_property(class_entry, property_height_name, &property_height_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_height_name);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_SDL_Window(void)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "SDL_Window", class_SDL_Window_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_SDL_Renderer(void)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "SDL_Renderer", class_SDL_Renderer_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
 
 	return class_entry;
 }

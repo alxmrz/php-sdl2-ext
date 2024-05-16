@@ -14,6 +14,10 @@ class SDL_Rect {
     public function __construct(int $x, int $y, int $width, int $height) {}
 }
 
+class SDL_Window {}
+
+class SDL_Renderer {}
+
 function SDL_GetError(): string {}
 
 function SDL_Init(int $flags): int {}
@@ -25,12 +29,12 @@ function SDL_CreateWindow(
     int $width,
     int $height,
     int $flags
-): bool {}
+): ?SDL_Window {}
 
 function SDL_CreateRenderer(
     int $index,
     int $flags
-): bool {}
+): SDL_Renderer {}
 
 function SDL_UpdateWindowSurface(): int {}
 
