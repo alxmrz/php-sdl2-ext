@@ -19,6 +19,8 @@
 	ZEND_PARSE_PARAMETERS_END()
 #endif
 
+zend_class_entry *sdl_rect_ce;
+
 static SDL_Window *_ext_window = NULL;
 static SDL_Renderer *_ext_renderer = NULL;
 
@@ -159,25 +161,28 @@ PHP_FUNCTION(SDL_SetRenderDrawColor)
 /* {{{ int SDL_RenderFillRect() */
 PHP_FUNCTION(SDL_RenderFillRect)
 {
-    long x;
-    long y;
-    long w;
-    long h;
+    zval *obj;
+    zval rv;
 
-    ZEND_PARSE_PARAMETERS_START(4, 4)
-            Z_PARAM_LONG(x)
-            Z_PARAM_LONG(y)
-            Z_PARAM_LONG(w)
-            Z_PARAM_LONG(h)
+    zval* px, *py, *pw, *ph;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+            Z_PARAM_OBJECT_OF_CLASS(obj, sdl_rect_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    SDL_Rect rect = {(int)x, (int)y, (int)w, (int)h};
+    px = zend_read_property(sdl_rect_ce, Z_OBJ_P(obj), "x", sizeof("x")-1, 1, &rv);
+    py = zend_read_property(sdl_rect_ce, Z_OBJ_P(obj), "y", sizeof("y")-1, 1, &rv);
+    pw = zend_read_property(sdl_rect_ce, Z_OBJ_P(obj), "width", sizeof("width")-1, 1, &rv);
+    ph = zend_read_property(sdl_rect_ce, Z_OBJ_P(obj), "height", sizeof("height")-1, 1, &rv);
 
-    if (SDL_RenderFillRect(_ext_renderer, &rect) < 0) {
-        RETURN_FALSE;
-    }
+    SDL_Rect rect = {
+            (int) zval_get_long(px),
+            (int) zval_get_long(py),
+            (int) zval_get_long(pw),
+            (int) zval_get_long(ph)
+    };
 
-    RETURN_TRUE;
+    RETURN_LONG(SDL_RenderFillRect(_ext_renderer, &rect));
 }
 /* }}} */
 
@@ -230,6 +235,31 @@ PHP_FUNCTION(SDL_Quit)
 }
 /* }}} */
 
+PHP_METHOD(SDL_Rect, __construct) /* {{{ */
+{
+    zval *obj;
+
+    long x;
+    long y;
+    long w;
+    long h;
+
+    ZEND_PARSE_PARAMETERS_START(4, 4)
+            Z_PARAM_LONG(x)
+            Z_PARAM_LONG(y)
+            Z_PARAM_LONG(w)
+            Z_PARAM_LONG(h)
+    ZEND_PARSE_PARAMETERS_END();
+
+    obj = getThis();
+
+    zend_update_property_long(sdl_rect_ce, Z_OBJ_P(obj), "x", sizeof("x") - 1, x);
+    zend_update_property_long(sdl_rect_ce, Z_OBJ_P(obj), "y", sizeof("x") - 1, x);
+    zend_update_property_long(sdl_rect_ce, Z_OBJ_P(obj), "width", sizeof("width") - 1, w);
+    zend_update_property_long(sdl_rect_ce, Z_OBJ_P(obj), "height", sizeof("height") - 1, h);
+}
+/* }}} */
+
 /* {{{ PHP_RINIT_FUNCTION */
 PHP_RINIT_FUNCTION(php_sdl2)
 {
@@ -267,6 +297,8 @@ PHP_MINIT_FUNCTION(php_sdl2)
     REGISTER_LONG_CONSTANT("SDL_WINDOW_SHOWN", SDL_WINDOW_SHOWN, CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("SDL_RENDERER_ACCELERATED", SDL_RENDERER_ACCELERATED, CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("SDL_WINDOWPOS_UNDEFINED", SDL_WINDOWPOS_UNDEFINED, CONST_PERSISTENT);
+
+    sdl_rect_ce = register_class_SDL_Rect();
 
     return SUCCESS;
 }

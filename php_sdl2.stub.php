@@ -5,6 +5,15 @@
  * @undocumentable
  */
 
+class SDL_Rect {
+    public int $x;
+    public int $y;
+    public int $width;
+    public int $height;
+
+    public function __construct(int $x, int $y, int $width, int $height) {}
+}
+
 function SDL_GetError(): string {}
 
 function SDL_Init(int $flags): int {}
@@ -32,7 +41,7 @@ function SDL_SetRenderDrawColor(
     int $a
 ): int {}
 
-function SDL_RenderFillRect(int $x, int $y, int $width, int $height): int {}
+function SDL_RenderFillRect(SDL_Rect $rect): int {}
 
 function SDL_RenderPresent(): void {}
 
