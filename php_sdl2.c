@@ -99,10 +99,12 @@ PHP_FUNCTION(SDL_CreateWindow)
 /* {{{ int SDL_CreateRenderer() */
 PHP_FUNCTION(SDL_CreateRenderer)
 {
+    zval *sdl_window;
     long index;
     long flags;
 
-    ZEND_PARSE_PARAMETERS_START(2, 2)
+    ZEND_PARSE_PARAMETERS_START(3, 3)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_window, sdl_window_ce)
             Z_PARAM_LONG(index)
             Z_PARAM_LONG(flags)
     ZEND_PARSE_PARAMETERS_END();
@@ -129,7 +131,11 @@ PHP_FUNCTION(SDL_CreateRenderer)
 /* {{{ int SDL_UpdateWindowSurface() */
 PHP_FUNCTION(SDL_UpdateWindowSurface)
 {
-    ZEND_PARSE_PARAMETERS_NONE();
+    zval *sdl_window;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_window, sdl_window_ce)
+    ZEND_PARSE_PARAMETERS_END();
 
     if (SDL_UpdateWindowSurface(_ext_window) < 0) {
         RETURN_FALSE;
@@ -142,12 +148,15 @@ PHP_FUNCTION(SDL_UpdateWindowSurface)
 /* {{{ int SDL_SetRenderDrawColor() */
 PHP_FUNCTION(SDL_SetRenderDrawColor)
 {
+    zval *sdl_renderer;
+
     long r;
     long g;
     long b;
     long a;
 
-    ZEND_PARSE_PARAMETERS_START(4, 4)
+    ZEND_PARSE_PARAMETERS_START(5, 5)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_renderer, sdl_renderer_ce)
             Z_PARAM_LONG(r)
             Z_PARAM_LONG(g)
             Z_PARAM_LONG(b)
@@ -165,12 +174,15 @@ PHP_FUNCTION(SDL_SetRenderDrawColor)
 /* {{{ int SDL_RenderFillRect() */
 PHP_FUNCTION(SDL_RenderFillRect)
 {
+    zval *sdl_renderer;
+
     zval *obj;
     zval rv;
 
     zval* px, *py, *pw, *ph;
 
-    ZEND_PARSE_PARAMETERS_START(1, 1)
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_renderer, sdl_renderer_ce)
             Z_PARAM_OBJECT_OF_CLASS(obj, sdl_rect_ce)
     ZEND_PARSE_PARAMETERS_END();
 
@@ -193,7 +205,11 @@ PHP_FUNCTION(SDL_RenderFillRect)
 /* {{{ int SDL_RenderPresent() */
 PHP_FUNCTION(SDL_RenderPresent)
 {
-    ZEND_PARSE_PARAMETERS_NONE();
+    zval *sdl_renderer;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_renderer, sdl_renderer_ce)
+    ZEND_PARSE_PARAMETERS_END();
 
     SDL_RenderPresent(_ext_renderer);
 }
@@ -215,7 +231,11 @@ PHP_FUNCTION(SDL_Delay)
 /* {{{ int SDL_DestroyRenderer() */
 PHP_FUNCTION(SDL_DestroyRenderer)
 {
-    ZEND_PARSE_PARAMETERS_NONE();
+    zval *sdl_renderer;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_renderer, sdl_renderer_ce)
+    ZEND_PARSE_PARAMETERS_END();
 
     SDL_DestroyRenderer(_ext_renderer);
 }
@@ -224,7 +244,11 @@ PHP_FUNCTION(SDL_DestroyRenderer)
 /* {{{ int SDL_DestroyWindow() */
 PHP_FUNCTION(SDL_DestroyWindow)
 {
-    ZEND_PARSE_PARAMETERS_NONE();
+    zval *sdl_window;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+            Z_PARAM_OBJECT_OF_CLASS(sdl_window, sdl_window_ce)
+    ZEND_PARSE_PARAMETERS_END();
 
     SDL_DestroyWindow(_ext_window);
 }

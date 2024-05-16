@@ -32,27 +32,29 @@ function SDL_CreateWindow(
 ): ?SDL_Window {}
 
 function SDL_CreateRenderer(
+    SDL_Window $window,
     int $index,
     int $flags
-): SDL_Renderer {}
+): ?SDL_Renderer {}
 
-function SDL_UpdateWindowSurface(): int {}
+function SDL_UpdateWindowSurface(SDL_Window $window): int {}
 
 function SDL_SetRenderDrawColor(
+    SDL_Renderer $renderer,
     int $r,
     int $g,
     int $b,
     int $a
 ): int {}
 
-function SDL_RenderFillRect(SDL_Rect $rect): int {}
+function SDL_RenderFillRect(SDL_Renderer $renderer, SDL_Rect $rect): int {}
 
-function SDL_RenderPresent(): void {}
+function SDL_RenderPresent(SDL_Renderer $renderer): void {}
 
 function SDL_Delay(int $ms): void {}
 
-function SDL_DestroyRenderer(): void {}
+function SDL_DestroyRenderer(SDL_Renderer $renderer): void {}
 
 function SDL_Quit(): void {}
 
-function SDL_DestroyWindow(): void {}
+function SDL_DestroyWindow(SDL_Window $window): void {}

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 10aeb260786a12d67b80818de5111d89fa2b91d0 */
+ * Stub hash: fc16706881f782f12a4ee973f51b6c4de6e8e878 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_GetError, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -17,26 +17,31 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_SDL_CreateWindow, 0, 6, SDL_Windo
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_SDL_CreateRenderer, 0, 2, SDL_Renderer, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_SDL_CreateRenderer, 0, 3, SDL_Renderer, 1)
+	ZEND_ARG_OBJ_INFO(0, window, SDL_Window, 0)
 	ZEND_ARG_TYPE_INFO(0, index, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_UpdateWindowSurface, 0, 0, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_UpdateWindowSurface, 0, 1, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, window, SDL_Window, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_SetRenderDrawColor, 0, 4, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_SetRenderDrawColor, 0, 5, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, renderer, SDL_Renderer, 0)
 	ZEND_ARG_TYPE_INFO(0, r, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, g, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, b, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, a, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_RenderFillRect, 0, 1, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_RenderFillRect, 0, 2, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, renderer, SDL_Renderer, 0)
 	ZEND_ARG_OBJ_INFO(0, rect, SDL_Rect, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_RenderPresent, 0, 0, IS_VOID, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_RenderPresent, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, renderer, SDL_Renderer, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_Delay, 0, 1, IS_VOID, 0)
@@ -45,9 +50,12 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_SDL_DestroyRenderer arginfo_SDL_RenderPresent
 
-#define arginfo_SDL_Quit arginfo_SDL_RenderPresent
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_Quit, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
 
-#define arginfo_SDL_DestroyWindow arginfo_SDL_RenderPresent
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_SDL_DestroyWindow, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, window, SDL_Window, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_SDL_Rect___construct, 0, 0, 4)
 	ZEND_ARG_TYPE_INFO(0, x, IS_LONG, 0)
