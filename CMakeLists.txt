@@ -4,7 +4,7 @@ project(php_sdl2 C)
 add_compile_definitions(HAVE_PHP_SDL_2)
 
 set(SOURCE_FILES php_sdl2 php_sdl2.c
-        test.c)
+)
 
 message("Using source directory: ${PHP_SOURCE}")
 

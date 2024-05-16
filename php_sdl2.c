@@ -56,6 +56,12 @@ PHP_FUNCTION(SDL_GetError)
 /* {{{ int SDL_CreateWindow() */
 PHP_FUNCTION(SDL_CreateWindow)
 {
+    if (_ext_window != NULL) {
+
+        zend_throw_error(NULL, "Error. Window already created.");
+        return;
+    }
+
     char *title = "Window title";
     size_t title_len = sizeof("Window title") - 1;
 
@@ -99,6 +105,12 @@ PHP_FUNCTION(SDL_CreateWindow)
 /* {{{ int SDL_CreateRenderer() */
 PHP_FUNCTION(SDL_CreateRenderer)
 {
+    if (_ext_renderer != NULL) {
+
+        zend_throw_error(NULL, "Error. Renderer already created.");
+        return;
+    }
+
     zval *sdl_window;
     long index;
     long flags;
