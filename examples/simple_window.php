@@ -14,7 +14,7 @@ $window = SDL_CreateWindow(
     SDL_WINDOW_SHOWN);
 
 if (!$window) {
-    php_printf("Can't create window: %s\n", SDL_GetError());
+    printf("Can't create window: %s\n", SDL_GetError());
     return;
 }
 
